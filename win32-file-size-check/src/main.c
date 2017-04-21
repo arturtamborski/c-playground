@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <cstdio>
+#include <cstdio.h>
 
 char szClassName[] = "WindowsApp";
 
@@ -68,16 +68,8 @@ int WINAPI WinMain(
     DWORD lsize = GetFileSize(file, &hsize);
 
     char buf[64] = {};
-    snprintf(buf, 64, "lsize - %dB\nhsize - %dB", lsize, hsize);
+    snprintf(buf, 64, "lsize - %dB\nhsize - %dB", (int)lsize, (int)hsize);
     MessageBox(hwnd, buf, szFileName, MB_OK);
 
     ExitProcess(0);
-
-    while (GetMessage (&messages, NULL, 0, 0))
-    {
-        TranslateMessage(&messages);
-        DispatchMessage(&messages);
-    }
-
-    return messages.wParam;
 }
