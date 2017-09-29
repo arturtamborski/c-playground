@@ -19,6 +19,8 @@ main (int argc, char **argv)
 			// some more info about those files
 			puts(ent->d_name);
 		}
+
+		closedir (dir);
 	}
 
 	return (0);
