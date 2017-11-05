@@ -1,2 +1,2 @@
 # c-playground
-Bunch of useless programs written in C/C++.
+Bunch of useless programs written mostly in C.

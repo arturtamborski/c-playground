@@ -38,7 +38,7 @@ main(int argc, char **argv)
     if (argc < 3)
     {
         puts(
-            "./stupidgrep <file> <pattern>\n"
+            "./stupid-grep <file> <pattern>\n"
             "\n"
             "   prints lines matching <pattern> in <file>\n"
         );

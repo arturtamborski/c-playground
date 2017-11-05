@@ -1,86 +1,89 @@
 #include <stdio.h>
-#include <ncurses.h>
 
 enum
 {
-    CALC_STACK_MAX = 1000,
+	CALC_STACK_MAX = 1000,
 };
 
 struct calc_context
 {
-    unsigned int sp;
-    float stack[CALC_STACK_MAX];
+	unsigned int sp;
+	int stack[CALC_STACK_MAX];
 } calc;
 
 void
-push(float x)
+push(int x)
 {
-    if (calc.sp < CALC_STACK_MAX)
-        calc.stack[calc.sp++] = x;
-    else
-        printf("error: stack full, cant push %f\n", x);
+	if (calc.sp < CALC_STACK_MAX)
+		calc.stack[calc.sp++] = x;
+	else
+		printf("error: stack is full, can\'t push %d\n", x);
 }
 
-float
+int
 pop(void)
 {
-    if (calc.sp > 0)
-        return calc.stack[--calc.sp];
-    else
-        printf("error: stack is empty\n");
+	if (calc.sp > 0)
+		return calc.stack[--calc.sp];
+	else
+		printf("error: stack is empty\n");
 
-    return 0.0;
+	return 0;
+}
+
+void
+print(void)
+{
+	int val = pop();
+        printf("\t%d\n", val);
+	push(val);
 }
 
 int
 main(int argc, char **argv)
 {
-    initscr();
-    cbreak();
-    //raw();
+	int op;
+	int reg;
 
-    int op;
-    float reg;
+	while ((op = getchar_unlocked()) != EOF)
+	{
+		switch (op)
+		{
+			case '0': case '1': case '2': case '3': case '4': 
+			case '5': case '6': case '7': case '8': case '9':
+				push(op);
+				puts("");
+				break;
 
-    while ((op = getch()) != EOF)
-    {
-        switch (op)
-        {
-            case '1': case '2': case '3': case '4': case '5':
-            case '6': case '7': case '8': case '9': case '0':
-                push((float)reg;
-                puts("");
-                break;
+			case '+':
+				push(pop() + pop());
+				break;
 
-            case '+':
-                push(pop() + pop());
-                break;
+			case '-':
+				reg = pop();
+				push(pop() - reg);
+				break;
 
-            case '-':
-                reg = pop();
-                push(pop() - reg);
-                break;
+			case '*':
+				push(pop() * pop());
+				break;
 
-            case '*':
-                push(pop() * pop());
-                break;
+			case '/':
+				reg = pop();
+				if (reg != 0)
+					push(pop() / reg);
+				else
+					puts("error: can\'t divide by zero!\n");
+				break;
 
-            case '/':
-                reg = pop();
-                if (reg != 0.0)
-                    push(pop() / reg);
-                else
-                    puts("error: cant divide by zero!\n");
-                break;
+			case '\n':
+				printf("\t%d\n", pop());
+				break;
 
-            case '\n':
-                printf("\t%.8f\n", pop());
-                break;
-
-            case ' ': case '\t':
-            default:
-                printf("error: unknown operator %c\n", op);
-                break;
-        }
-    }
+			case ' ': case '\t':
+			default:
+				printf("error: unknown operator %c\n", op);
+				break;
+		}
+	}
 }
