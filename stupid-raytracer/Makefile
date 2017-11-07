@@ -14,7 +14,8 @@ CFLAGS  = -c -std=c99 -g -ggdb -Og -ftrapv -fsanitize=address -I$(INCDIR) \
 	-Wredundant-decls -Wnested-externs -Winline -Wundef -Wshadow -Wpointer-arith \
 	-Wuninitialized -Wconversion -Wstrict-prototypes -Wcast-align -Wswitch-default \
 	-Wno-unused-parameter -Wno-missing-prototypes -Wno-missing-declarations \
-	-Wformat-extra-args -Wformat-zero-length -Wformat=2
+	-Wformat-extra-args -Wformat-zero-length -Wformat=2 \
+	-DDEBUG -Wno-unused-function
 
 INCS	= $(shell find $(INCDIR) -type f -name '*.h')
 SRCS	= $(shell find $(SRCDIR) -type f -name '*.c')
