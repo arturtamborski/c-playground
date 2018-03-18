@@ -3,7 +3,7 @@
 #define LINE_MAX 1000
 
 int
-getline(char *str, int len)
+readline(char *str, int len)
 {
     int c, i = 0;
 
@@ -51,7 +51,7 @@ main(int argc, char **argv)
     if (!freopen(argv[1], "r", stdin))
         return 2;
 
-    while (getline(line, LINE_MAX) > 0)
+    while (readline(line, LINE_MAX) > 0)
     {
         if (strindex(line, pattern) >= 0)
             puts(line);

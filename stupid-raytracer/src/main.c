@@ -10,17 +10,16 @@ main(int argc, char **argv)
 	struct bitmap *bmp;
 
 	bmp = bitmap_create();
-	bitmap_read(bmp, "template.bmp");
-	bitmap_free(bmp);
-	bitmap_destroy(bmp);
 
-	bmp = bitmap_create();
-	bitmap_init(bmp, 800, 600);
+	bitmap_init(bmp, 400, 200);
+	for (u32 y = 0; y < bmp->header.height; y++)
+		for (u32 x = 0; x < bmp->header.width; x++)
+			*bitmap_at(bmp, x, y) = y < bmp->header.height / 2 ? 0xff : 0xff0000;
+	bitmap_read(bmp, "untitled.bmp");
 
-	for (u32 i = 0; i < bmp->header.width * bmp->header.height; i++)
-		bmp->data[i] = i * 10;
-
+	bitmap_resize(bmp, bmp->header.width * 2, bmp->header.height * 2);
 	bitmap_write(bmp, "test.bmp");
+
 	bitmap_free(bmp);
 	bitmap_destroy(bmp);
 

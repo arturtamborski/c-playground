@@ -5,7 +5,7 @@ struct bitmap_header
 {
 	u16 file_type;
 	u32 file_size;
-	u16 _reserved[2];
+	u32 _reserved;
 	u32 bitmap_offset;
 
 	u32 header_size;
@@ -39,7 +39,9 @@ void		bitmap_destroy(struct bitmap *bmp);
 int		bitmap_init(struct bitmap *bmp, u32 width, u32 height);
 void		bitmap_free(struct bitmap *bmp);
 
+u32		*bitmap_at(struct bitmap *bmp, u32 width, u32 height);
 int		bitmap_resize(struct bitmap *bmp, u32 width, u32 height);
+int		bitmap_copy(struct bitmap *from, struct bitmap *to);
 
 int		bitmap_read(struct bitmap *bmp, cstr *fname);
 int		bitmap_write(struct bitmap *bmp, cstr *fname);

@@ -2,12 +2,11 @@
  * If you don't understand this then read his great blog post here:
  * http://nullprogram.com/blog/2014/12/23/
  */
-
 #include <stdio.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
 
-#include "app.h"
+#include "../lib/app.h"
 
 
 void
@@ -45,8 +44,9 @@ load_app(app *app, char *lib, char *symbol)
 		dlclose(app->handle);
 	}
 
-	// can't open/load lib
+	// open lib
 	if ((handle = dlopen(lib, RTLD_NOW)) == NULL) {
+		printf("dlopen(): %s\n", dlerror());
 		app->handle = NULL;
 		app->id = 0;
 		return (-2);
