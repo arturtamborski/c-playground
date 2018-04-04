@@ -31,7 +31,7 @@ clean:
 	@rm -r $(TARGET) $(OBJS) $(OBJDIR) 2>/dev/null || true
 
 $(TARGET): $(OBJS) | $(OBJDIR) 
-	@$(LD) $(LDFLAGS) -o $@ $?
+	@$(LD) $(LDFLAGS) -L$(OBJDIR) -o $@ $^
 
 $(OBJS): $(OBJDIR)/%$(OBJEXT) : $(SRCDIR)/%$(SRCEXT) | $(OBJDIR)
 	@$(CC) $(CCFLAGS) -I$(INCDIR) -c -o $@ $?

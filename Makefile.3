@@ -35,13 +35,13 @@ clean:
 	@rm -r $(TARGET) $(LIBRARY)$(LIBEXT) $(OBJS) $(OBJDIR) 2>/dev/null || true
 
 $(TARGET): $(OBJS) | $(OBJDIR) 
-	@$(LD) $(LDFLAGS) -o $@ $?
+	@$(LD) $(LDFLAGS) -L$(OBJDIR) -L$(LIBDIR) -o $@ $^
 
 $(OBJS): $(OBJDIR)/%$(OBJEXT) : $(SRCDIR)/%$(SRCEXT) | $(OBJDIR)
 	@$(CC) $(CCFLAGS) -I$(INCDIR) -c -o $@ $?
 
 $(LIBRARY)$(LIBEXT) : $(LIBS)
-	@$(CC) $(CCFLAGS) -I$(INCDIR) -rdynamic -fpic -shared -o $@ $?
+	@$(CC) $(CCFLAGS) -I$(INCDIR) -L$(OBJDIR) -L$(LIBDIR) -rdynamic -fpic -shared -o $@ $^
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR) $(OBJTREE)
