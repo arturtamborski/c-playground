@@ -6,7 +6,7 @@ void
 {
 	puts(__func__);
 	while (1)
-		;
+		/* nothing */;
 }
 
 int
@@ -18,7 +18,7 @@ main(void)
 	puts(__func__);
 
 	while (1)
-		;
+		/* nothing */;
 
 	return (0);
 }

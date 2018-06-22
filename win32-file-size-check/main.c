@@ -1,3 +1,5 @@
+/* I hate WinAPI */
+
 #include <windows.h>
 #include <cstdio.h>
 

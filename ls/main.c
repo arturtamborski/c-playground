@@ -12,12 +12,12 @@ main (int argc, char **argv)
 	if (argc > 1)
 		path = argv[1];
 
-	if ((dir = opendir(path)))
+	if (dir = opendir(path))
 	{
 		while ((ent = readdir(dir)) != NULL)
 		{
 			// i should use printf and print
-			// some more info about those files
+			// some more info about these files
 			puts(ent->d_name);
 		}
 

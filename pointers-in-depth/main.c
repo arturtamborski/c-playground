@@ -19,13 +19,14 @@ int main(int argc, char **argv)
     konto *seba;
 
     // --- stos
-    // zmienna `mati` istnieje do końca funkcji main i jest
-    // automatycznie usuwana za nas.
-    // mati.nick to pamięć zaalokowana ręcznie czyli teoretycznie
-    // istnieje nadal po funkcji main (w rzeczywistości po funkcji
-    // main kończy się program i system operacyjny sprząta po nas
-    // pamięć, ale możemy założyć, że jeśli jej nie zwolnimy, to
-    // nadal jest zaalokowana).
+    // zmienna `mati` istnieje do końca funkcji main
+    // i jest automatycznie usuwana za nas.
+    // mati.nick i mati.pass to pamięć zaalokowana ręcznie 
+    // czyli teoretycznie istnieje nadal po funkcji main.
+    // w rzeczywistości po funkcji main kończy się program 
+    // i system operacyjny sprząta po nas pamięć, 
+    // ale możemy założyć, że jeśli jej nie zwolnimy, 
+    // to nadal jest zaalokowana.
     mati.nick = malloc(16);
     mati.pass = malloc(16);
 
@@ -64,7 +65,7 @@ int main(int argc, char **argv)
 
     // wypisze rozmiar typu seba, czyli **wskaźnika** na strukturę.
     // seba to wskaźnik, a nie cała struktura!
-    // wskaźnik trzyma adres (pamięci z linii 56) gdzie leży cała faktyczna
+    // wskaźnik trzyma adres pamięci (z linii 62) gdzie leży cała faktyczna
     // struktura wraz ze zmiennymi seba->nick i seba->pass.
     printf("sizeof(seba) = %d\n", sizeof(seba));
 
