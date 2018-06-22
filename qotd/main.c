@@ -1,5 +1,5 @@
 /**
- * Simple Quote Of The Day server (RFC 865)
+ * Quote Of The Day server (RFC 865)
  * Based on https://gkbrk.com/wiki/qotd_protocol/
  */
 
@@ -35,10 +35,10 @@ char USER[32];
 char ADDR[16] = "0.0.0.0";
 char *HELP = 
 "NAME\n"
-"\tsimple-qotd - simple quote of the day server\n\n"
+"\tqotd - simple quote of the day server\n\n"
 "SYNOPSIS\n"
-"\tsimple-qotd -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -f\n"
-"\tsimple-qotd -h\n\n"
+"\tqotd -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -f\n"
+"\tqotd -h\n\n"
 "DESCRIPTION\n"
 "\tServe random quotes to anyone who connects over TCP\n\n"
 "\t-a [ADDRESS]\n"

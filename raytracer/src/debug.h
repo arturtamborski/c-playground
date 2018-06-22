@@ -1,6 +1,9 @@
-#pragma once
+#ifndef DEBUG_H
+#define DEBUG_H
 
-#include <stdlib.h> // exit()
+
+#include <stdlib.h>
+
 
 #define _TOSTR(x) #x
 #define TOSTR(x) _TOSTR(x)
@@ -34,3 +37,6 @@
 	do { exit(-1); } while(0)
 
 #endif
+
+
+#endif // DEBUG_H
