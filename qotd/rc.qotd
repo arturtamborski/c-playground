@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# run the qotd server
+
+qotd_start() {
+  	./qotd -p 1234 -u nobody -f -q 128 | cat > qotd.log &
+	pidof qotd > /dev/null
+	exit $?
+}
+
+qotd_stop() {
+	killall qotd
+	exit $?
+}
+
+case "$1" in
+'start')
+	qotd_start
+	;;
+'stop')
+	qotd_stop
+	;;
+'restart')
+	qotd_stop
+	qotd_start
+	;;
+*)
+	echo "usage $0 start|stop|restart"
+	exit 1
+esac
