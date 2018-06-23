@@ -3,7 +3,7 @@
 # run the qotd server
 
 qotd_start() {
-  	./qotd -p 1234 -u nobody -f -q 128 | cat > qotd.log &
+  	script -qac "qotd -p 1234 -u nobody -f -q 128" > qotd.log &
 	pidof qotd > /dev/null
 	exit $?
 }
