@@ -35,10 +35,10 @@ char USER[32];
 char ADDR[16] = "0.0.0.0";
 char *HELP = 
 "NAME\n"
-"\tqotd - simple quote of the day server\n\n"
+"\tqotdd - simple quote of the day server\n\n"
 "SYNOPSIS\n"
-"\tqotd -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -f\n"
-"\tqotd -h\n\n"
+"\tqotdd -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -f\n"
+"\tqotdd -h\n\n"
 "DESCRIPTION\n"
 "\tServe random quotes to anyone who connects over TCP\n\n"
 "\t-a [ADDRESS]\n"

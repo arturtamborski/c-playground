@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# run the qotdd server
+
+qotdd_start() {
+  	script -qac "qotdd -p 1234 -u nobody -f -q 128" > qotdd.log &
+	pidof qotdd > /dev/null
+	exit $?
+}
+
+qotdd_stop() {
+	killall qotdd
+	exit $?
+}
+
+case "$1" in
+'start')
+	qotdd_start
+	;;
+'stop')
+	qotdd_stop
+	;;
+'restart')
+	qotdd_stop
+	qotdd_start
+	;;
+*)
+	echo "usage $0 start|stop|restart"
+	exit 1
+esac
