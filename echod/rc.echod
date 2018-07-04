@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# run the echod server
+
+echod_start() {
+  	script -qac "echod -p 1234 -u nobody -q 128" > echod.log &
+	pidof echod > /dev/null
+	exit $?
+}
+
+echod_stop() {
+	killall echod
+	exit $?
+}
+
+case "$1" in
+'start')
+	echod_start
+	;;
+'stop')
+	echod_stop
+	;;
+'restart')
+	echod_stop
+	echod_start
+	;;
+*)
+	echo "usage $0 start|stop|restart"
+	exit 1
+esac
