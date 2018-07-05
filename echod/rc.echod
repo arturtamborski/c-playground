@@ -4,6 +4,7 @@
 
 echod_start() {
   	./echod -p 1234 -u nobody -q 128 -l ./echod.log -v &
+	sleep 1
 	pidof echod > /dev/null
 	exit $?
 }
