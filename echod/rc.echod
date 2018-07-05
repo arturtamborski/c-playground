@@ -3,7 +3,7 @@
 # run the echod server
 
 echod_start() {
-  	script -qac "echod -p 1234 -u nobody -q 128" > echod.log &
+  	./echod -p 1234 -u nobody -q 128 -l ./echod.log -v &
 	pidof echod > /dev/null
 	exit $?
 }

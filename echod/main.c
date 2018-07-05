@@ -10,9 +10,9 @@
 #include <string.h>
 #include <getopt.h>
 #include <errno.h>
+#include <time.h>
 
 /* system */
-#include <time.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -29,13 +29,14 @@
 int VERBOSE = 0;
 int PORT = 7;
 int QUEUE = 64;
-char USER[32] = "";
+char USER[32];
 char ADDR[INET_ADDRSTRLEN] = "0.0.0.0";
+char LOGFILE[80];
 char *HELP =
 "NAME\n"
 "   echod - simple echo server\n\n"
 "SYNOPSIS\n"
-"    echod -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -v\n"
+"    echod -a [ADDRESS] -p [PORT] -u [USERNAME] -q [QUEUE SIZE] -l [LOG FILE] -v\n"
 "    echod -h\n\n"
 "DESCRIPTION\n"
 "    Send back to the originating source any data it receives\n\n"
@@ -47,9 +48,11 @@ char *HELP =
 "        User to switch after binding port. Example -u nobody\n\n"
 "    -q [QUEUE SIZE]\n"
 "        Size of the connection queue waiting for response. Defaults to 64.\n"
-"        Example: -q 128\n"
+"        Example: -q 128\n\n"
+"    -l [LOG FILE]\n"
+"        Log file for errors. Defaults to stdout. Example -l echod.log\n\n"
 "    -v\n"
-"        Verbose mode. Defaults to false. Example: -v\n"
+"        Verbose mode. Defaults to false. Example: -v\n\n"
 "    -h\n"
 "        Show this message.\n"
 "";
@@ -58,15 +61,22 @@ static inline void
 print(char *fmt, ...)
 {
 	va_list ap;
+	time_t now;
+	char buf[24];
+
+	now = time(NULL);
+	strftime(buf, sizeof(buf), "%F %H:%M:%S ", localtime(&now));
+	fputs(buf, stdout);
 
 	va_start(ap, fmt);
 	vfprintf(stdout, fmt, ap);
 	va_end(ap);
 
-	fputc('\n', stdout);
-
 	if (VERBOSE && errno)
-		perror("echod"), errno = 0;
+		fputs(strerror(errno), stdout), errno = 0;
+
+	fputc('\n', stdout);
+	fflush(stdout);
 }
 
 static inline void
@@ -86,22 +96,35 @@ parse_args(int argc, char **argv)
 {
 	int opt;
 
-	while ((opt = getopt(argc, argv, "p:q:a:u:vh")) > 0)
+	while ((opt = getopt(argc, argv, "p:q:a:u:l:vh")) > 0)
 	{
 		switch (opt)
 		{
-			case 'v': VERBOSE = 1; break;
-			case 'p': PORT = atoi(optarg); break;
-			case 'q': QUEUE = atoi(optarg); break;
-			case 'a': strncpy(ADDR, optarg, sizeof(ADDR)); break;
-			case 'u': strncpy(USER, optarg, sizeof(USER)); break;
-			case 'h': puts(HELP); exit(0); break;
-			default:  die("Could not parse all arguments"); break;
+			case 'v':
+				VERBOSE = 1;
+			break;
+			case 'p':
+				PORT = atoi(optarg);
+			break;
+			case 'q':
+				QUEUE = atoi(optarg);
+			break;
+			case 'a':
+				strncpy(ADDR, optarg, sizeof(ADDR));
+			break;
+			case 'u':
+				strncpy(USER, optarg, sizeof(USER));
+			break;
+			case 'l':
+				strncpy(LOGFILE, optarg, sizeof(LOGFILE));
+			break;
+			case 'h':
+				puts(HELP); exit(0);
+			break;
+			default:
+				die("Could not parse all arguments");
 		}
 	}
-
-	if (USER[0] == '\0')
-		getlogin_r(USER, sizeof(USER));
 }
 
 static void
@@ -215,8 +238,24 @@ main(int argc, char **argv)
 	fd_set master, copy;
 	struct timeval to;
 	int sv, cl, top, i;
+	FILE *log;
 
 	parse_args(argc, argv);
+
+	if (USER[0] == '\0')
+		getlogin_r(USER, sizeof(USER));
+
+	if (LOGFILE[0] != '\0')
+	{
+		if ((log = fopen(LOGFILE, "a")) == NULL)
+			die("Failed to open log file");
+
+		if (dup2(fileno(log), fileno(stdout)) < 0)
+			die("Failed to redirect stdout");
+
+		fclose(log);
+	}
+
 	sv = listen_on_port(PORT);
 	change_user(USER);
 
