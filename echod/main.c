@@ -155,6 +155,11 @@ listen_on_port(int port)
 	int sock;
 	int y = 1;
 
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_port = htons(port);
+	addr.sin_addr.s_addr = inet_addr(ADDR);
+	addr.sin_family = AF_INET;
+
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		die("Failed to create socket");
 
@@ -163,10 +168,6 @@ listen_on_port(int port)
 		close(sock);
 		die("Failed to set reusable socket");
 	}
-
-	memset(&addr, 0, sizeof(addr));
-	addr.sin_port = htons(port);
-	addr.sin_family = AF_INET;
 
 	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
