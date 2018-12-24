@@ -1,6 +1,6 @@
-TARGETS	= all clean
+TARGETS = all clean
 
-SUBDIRS	= $(wildcard */.)
+SUBDIRS = $(wildcard */.)
 
 $(TARGETS): $(SUBDIRS)
 	@echo Done.
