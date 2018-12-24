@@ -19,6 +19,8 @@ init(void)
 static int
 load(state *s)
 {
+	(void)s;
+
 	puts("loading...");
 
 	return (0);
@@ -36,6 +38,8 @@ step(state *s)
 static void
 unload(state *s)
 {
+	(void)s;
+
 	puts("unloading...");
 }
 

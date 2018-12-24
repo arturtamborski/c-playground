@@ -3,6 +3,7 @@
  * http://nullprogram.com/blog/2014/12/23/
  */
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
 
