@@ -222,9 +222,11 @@ main(int argc, char *argv[])
 		return run_server(argv[1]);
 
 	if (argc == 3)
-		return run_client(argv[1], argv[2]);
+		return run_client(argv[2], argv[1]);
 	
-	puts("Run program without any arguments to receive or pass file name to send it.");
+	puts("Run program without any arguments to receive.");
+	puts("Run program with single argument to receive at specified address.");
+	puts("Run program with two arguments to send file to specified address.");
 
-	return -1;
+	return 0;
 }
