@@ -1,0 +1,24 @@
+# C++ 
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+*.gcda
+*.gcno
+*.obj
+*.pdb
+*.res
+
+# Qt
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+qrc_*.cpp
+Makefile*
+*-build-*
